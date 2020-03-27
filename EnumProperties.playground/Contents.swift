@@ -29,8 +29,18 @@ class Visitor: SyntaxVisitor {
   }
 
   override func visit(_ node: EnumCaseElementSyntax) -> SyntaxVisitorContinueKind {
-    print("  var \(node.identifier): \(node.associatedValue!.parameterList)? {")
-    print("    guard case let .\(node.identifier)(value) = self else { return nil }")
+    if let parameterList = node.associatedValue?.parameterList {
+        if parameterList.count == 1 {
+            print("  var \(node.identifier): \(parameterList)? {")
+        } else {
+            print("  var \(node.identifier): (\(parameterList))? {")
+        }
+        print("    guard case let .\(node.identifier)(value) = self else { return nil }")
+    } else {
+        print("  var \(node.identifier) {")
+        print("    guard case let .\(node.identifier) = self else { return nil }")
+    }
+    
     print("    return value")
     print("  }")
     return .skipChildren
