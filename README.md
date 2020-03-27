@@ -11,3 +11,7 @@ edited Package.swift
 
 cmd: swift build
 
+cmd: swift package generate-xcodeproj
+
+create new workspace, add xcodeproj to workspace
+add new playgrund for testing
